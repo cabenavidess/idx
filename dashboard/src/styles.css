@@ -1,0 +1,52 @@
+.sidebar-nav ul li a.router-link-active,
+.sidebar-nav ul li a:hover {
+  color: #00897b !important;
+}
+
+.sidebar-nav ul li a.router-link-active i,
+.sidebar-nav ul li a:hover i {
+  color: #00897b !important;
+}
+
+[_nghost-c2] a {
+  color: #00897b !important;
+  text-decoration: none;
+}
+
+.ng2-smart-titles {
+  background-color: rgba(169, 169, 169, 0.116) !important;
+  border-radius: 3px !important;
+}
+
+.white {
+  color: #fff !important;
+}
+
+.good {
+  color: #108f0c !important;
+}
+
+.warning {
+  color: #ffa500 !important;
+}
+
+.damage {
+  color: #ff0000 !important;
+}
+
+.bold {
+  font-weight: 900 !important;
+}
+
+.card-body-venta {
+  padding: 0.25rem !important;
+  margin-bottom: -2rem !important;
+}
+
+.altura {
+  height: 10px !important;
+}
+
+.altura-select{
+  margin: -10px !important;
+}

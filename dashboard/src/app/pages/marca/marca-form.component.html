@@ -1,0 +1,74 @@
+<div class="row" *ngIf="_mode">
+  <div class="col-lg-12">
+    <div class="card card-outline-inverse">
+      <div class="card-header">
+        <h4 class="m-b-0 text-white" *ngIf="_mode == 'create'">Crear Nueva Marca de Producto</h4>
+        <h4 class="m-b-0 text-white" *ngIf="_mode == 'update'">Actualizar Marca</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="forma" (ngSubmit)="guardarDatos()">
+          <div class="form-body">
+            <div class="row p-t-20">
+              <div class="col-md-12">
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_marca_nombre'].errors?.pattern">
+                  <label class="control-label">Marca
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese la Marca del Producto..." formControlName="tab_marca_nombre"
+                    [(ngModel)]="_marca.tab_marca_nombre" (ngModelChange)="_marca.tab_marca_nombre = $event.toLocaleUpperCase()"/>
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_marca_nombre'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_marca_nombre'].errors?.pattern">
+                    El nombre de la marca del producto sólo permite letras, números, espacios y una longitud mínima de 3 caracteres.</small>
+                </div>
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_marca_descripcion'].errors?.pattern">
+                  <label class="control-label">Descripción de la Marca
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese la descripción de la Marca..." formControlName="tab_marca_descripcion"
+                    [(ngModel)]="_marca.tab_marca_descripcion" (ngModelChange)="_marca.tab_marca_descripcion = $event.toLocaleUpperCase()"/>
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_marca_descripcion'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_marca_descripcion'].errors?.pattern">
+                    La descripción de la marca del producto sólo permite letras, números, espacios y una longitud mínima de 3 caracteres.</small>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label">Estado</label>
+                  <select [(ngModel)]="_marca.tab_marca_status" formControlName="tab_marca_status"
+                   class="form-control">
+                    <option  value="1">Activo</option>
+                    <option  value="0">Inactivo</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row p-t-20">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Categoria</label>
+                  <select [(ngModel)]="_marca.fk_tab_categoria_id" formControlName="fk_tab_categoria_id"
+                    id="fk_tab_categoria_id" class="form-control">
+                    <option *ngFor="let item of _categoria" [value]="item.tab_categoria_id">{{item.tab_categoria_nombre}}</option>
+                  </select>
+                </div>
+
+
+              </div>
+            </div>
+
+
+          </div>
+          <div class="form-actions">
+            <!-- <button type="submit" class="btn btn-success" [disabled]="!_form.valid || _submitted == true"> -->
+            <button type="submit" class="btn btn-success" [disabled]="!forma.valid || _submitted == true">
+              <i class="fa fa-check"></i> Guardar</button>
+            <button type="button" class="btn btn-inverse" [routerLink]="['/marca']">
+              <i class="fa  fa-arrow-left"></i> Regresar a la lista</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

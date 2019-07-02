@@ -1,0 +1,18 @@
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"> <strong> Total Recaudado Por Fechas:</strong> </h4>
+        <hr>
+        <h6 class="card-subtitle">
+          <button type="button" class="btn btn-rounded btn-outline-info float-right" (click)="export()">
+            <i class="fa fa-download"></i> Exportar</button>
+        </h6>
+        <br>
+        <br>
+
+        <ng2-smart-table #grid [settings]="settings" [source]="data"></ng2-smart-table>
+
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,118 @@
+<div class="row" *ngIf="_mode">
+  <div class="col-lg-12">
+    <div class="card card-outline-inverse">
+      <div class="card-header">
+        <h4 class="m-b-0 text-white" *ngIf="_mode == 'create'">Crear Nuevo Producto</h4>
+        <h4 class="m-b-0 text-white" *ngIf="_mode == 'update'">Actualizar Producto</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="forma" (ngSubmit)="guardarDatos()">
+          <div class="form-body">
+            <div class="row p-t-20">
+              <div class="col-md-12">
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_producto_codigo'].errors?.pattern">
+                  <label class="control-label">Código del Producto
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese el código del producto..." formControlName="tab_producto_codigo"
+                    [(ngModel)]="_producto.tab_producto_codigo" (ngModelChange)="_producto.tab_producto_codigo = $event.toLocaleUpperCase()"
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_producto_codigo'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_producto_codigo'].errors?.pattern">
+                    El código del producto sólo permite letras, números y una longitud mínima de 4 caracteres.</small>
+                </div>
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_producto_nombre'].errors?.pattern">
+                  <label class="control-label">Nombre del Producto
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese el nombre del producto..." formControlName="tab_producto_nombre"
+                    [(ngModel)]="_producto.tab_producto_nombre" (ngModelChange)="_producto.tab_producto_nombre = $event.toLocaleUpperCase()"
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_producto_nombre'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_producto_nombre'].errors?.pattern">
+                    El nombre del producto sólo permite letras, números, espacios y una longitud mínima de 3 caracteres.</small>
+                </div>
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_producto_descripcion'].errors?.pattern">
+                  <label class="control-label">Descripción del Producto
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese la descripción del producto..." formControlName="tab_producto_descripcion"
+                    [(ngModel)]="_producto.tab_producto_descripcion" (ngModelChange)="_producto.tab_producto_descripcion = $event.toLocaleUpperCase()"
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_producto_descripcion'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_producto_descripcion'].errors?.pattern">
+                    La descripción del producto sólo permite letras, números, espacios y una longitud mínima de 3 caracteres.</small>
+                </div>
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_producto_imagen'].errors?.pattern">
+                  <label class="control-label">Imagen del Producto
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese la url de la imagen del producto.." formControlName="tab_producto_imagen"
+                    [(ngModel)]="_producto.tab_producto_imagen" 
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_producto_imagen'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_producto_imagen'].errors?.pattern">
+                    La imgen del producto permite formatos .jpg</small>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label">Estado</label>
+                  <select [(ngModel)]="_producto.tab_producto_status" formControlName="tab_producto_status" class="form-control">
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                  </select>
+                </div>
+
+                <div class="form-group" *ngIf="_mode == 'update'">
+                  <label class="control-label">Iva</label>
+                  <!-- <select [(ngModel)]="_producto.tab_producto_iva" formControlName="tab_producto_iva" class="form-control">
+                    <option value="1">SI</option>
+                    <option value="0">NO</option>
+                  </select> -->
+                  <br>
+                  
+                  <input type="text" *ngIf="_producto.tab_producto_iva" [(ngModel)]="_producto.tab_producto_iva"  value="SI" readonly="disabled">
+                  <input type="text" *ngIf="!_producto.tab_producto_iva" [(ngModel)]="_producto.tab_producto_iva"  value="NO" readonly="disabled">
+                </div>
+
+                <div class="form-group" *ngIf="_mode == 'create'">
+                  <label class="control-label">Iva</label>
+                  <select [(ngModel)]="_producto.tab_producto_iva" formControlName="tab_producto_iva" class="form-control">
+                    <option value="1">SI</option>
+                    <option value="0">NO</option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row p-t-20">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Marca del Producto</label>
+                  <select [(ngModel)]="_producto.fk_tab_marca_id" formControlName="fk_tab_marca_id" id="fk_tab_negocio_ciudad_id" class="form-control">
+                    <option *ngFor="let item of _marca" [value]="item.tab_marca_id">{{item.tab_marca_nombre}}</option>
+                  </select>
+                </div>
+
+
+              </div>
+            </div>
+
+
+          </div>
+          <div class="form-actions">
+            <!-- <button type="submit" class="btn btn-success" [disabled]="!_form.valid || _submitted == true"> -->
+            <button type="submit" class="btn btn-success" [disabled]="!forma.valid || _submitted == true">
+              <i class="fa fa-check"></i> Guardar</button>
+            <button type="button" class="btn btn-inverse" [routerLink]="['/producto']">
+              <i class="fa  fa-arrow-left"></i> Regresar a la lista</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

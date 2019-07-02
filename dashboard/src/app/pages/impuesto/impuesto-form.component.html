@@ -1,0 +1,63 @@
+<div class="row" *ngIf="_mode">
+  <div class="col-lg-12">
+    <div class="card card-outline-inverse">
+      <div class="card-header">
+        <h4 class="m-b-0 text-white" *ngIf="_mode == 'create'">Crear Nuevo Impuesto</h4>
+        <h4 class="m-b-0 text-white" *ngIf="_mode == 'update'">Actualizar Impuesto</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="forma" (ngSubmit)="guardarDatos()">
+          <div class="form-body">
+            <div class="row p-t-20">
+              <div class="col-md-12">
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_impuestos_iva_nombre'].errors?.pattern">
+                  <label class="control-label">Nombre Impuesto
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese el nombre del impuesto..." formControlName="tab_impuestos_iva_nombre"
+                    [(ngModel)]="_impuesto.tab_impuestos_iva_nombre" (ngModelChange)="_impuesto.tab_impuestos_iva_nombre = $event.toLocaleUpperCase()"
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_impuestos_iva_nombre'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_impuestos_iva_nombre'].errors?.pattern"> El nombre del impuesto sólo permite letras, números, espacios y una longitud mínima de 3 caracteres.</small>
+                </div>
+
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_impuestos_iva_descripcion'].errors?.pattern">
+                  <label class="control-label">Descripcion Impuesto
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese la descripcion del impuesto..." formControlName="tab_impuestos_iva_descripcion"
+                    [(ngModel)]="_impuesto.tab_impuestos_iva_descripcion" (ngModelChange)="_impuesto.tab_impuestos_iva_descripcion = $event.toLocaleUpperCase()"
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_impuestos_iva_descripcion'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_impuestos_iva_descripcion'].errors?.pattern">
+                    La descripción del impuesto sólo permite letras, números, espacios y una longitud mínima de 3 caracteres.</small>
+                </div>
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_impuestos_iva_valor'].errors?.pattern">
+                  <label class="control-label">Valor Impuesto
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese el valor del impuesto..." formControlName="tab_impuestos_iva_valor"
+                    [(ngModel)]="_impuesto.tab_impuestos_iva_valor" change/>
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_impuestos_iva_valor'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_impuestos_iva_valor'].errors?.pattern"> El valor del impuesto sólo números. Ejemplo: 0.12</small>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <!-- <button type="submit" class="btn btn-success" [disabled]="!_form.valid || _submitted == true"> -->
+            <button type="submit" class="btn btn-success" [disabled]="!forma.valid || _submitted == true">
+              <i class="fa fa-check"></i> Guardar</button>
+            <button type="button" class="btn btn-inverse" [routerLink]="['/impuesto']">
+              <i class="fa  fa-arrow-left"></i> Regresar a la lista</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

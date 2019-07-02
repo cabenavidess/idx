@@ -1,0 +1,18 @@
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Marca Productos</h4>
+        <hr>
+        <button type="button" class="btn btn-rounded btn-outline-success" [routerLink]="['/marca/crear']">
+          <i class="fa fa-plus-square"></i> Crear Marca</button>
+        <button type="button" class="btn btn-rounded btn-outline-info float-right" (click)="export()">
+          <i class="fa fa-download"></i> Exportar</button>
+        <h6 class="card-subtitle"></h6>
+
+        <ng2-smart-table [settings]="settings" [source]="data"></ng2-smart-table>
+
+      </div>
+    </div>
+  </div>
+</div>

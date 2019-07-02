@@ -1,0 +1,291 @@
+<div class="card">
+  <div class="card-body">
+    <div *ngIf="data">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12">
+              <p>PROVEEDOR:
+                <strong>{{data.proveedor_empresa}}</strong>
+              </p>
+            </div>
+            <div class="col-sm-12">
+              <p>RUC: {{data.proveedor_ruc}}</p>
+            </div>
+            <div class="col-sm-12">
+              <p>Teléfono:
+                <strong>{{data.proveedor_telefono}}</strong>
+              </p>
+            </div>
+            <div class="col-sm-12">
+              <p>Email:
+                <strong>{{data.proveedor_email}}</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <h4 class="card-title">Nro de Guía:
+            <strong>{{data.guia}}</strong>
+          </h4>
+          <br>
+          <h6 class="card-subtitle">Fecha
+            <code>{{data.creado_en}}</code>
+          </h6>
+        </div>
+      </div>
+
+      <!-- {{data | json }} -->
+    </div>
+
+    <div class="card card-outline-inverse">
+        <div class="card-header">
+          <h4 class="m-b-0 text-white">Clientes</h4>
+        </div>
+    <div class="card-body"></div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body card-body-venta">
+          <div class="card">
+            <input type="text" [(ngModel)]="termClient" placeholder="Seleccione el cliente..">
+          </div>
+        </div>
+      </div>
+      <div class="card-columns">
+        <div *ngFor="let item of _cliente | filter:termClient ; let i=index" (click)="addToClient(item)">
+          <div class="card" *ngIf="i<3">
+            <div class="card-body">
+              <h5 class="card-title">{{item.tab_cliente_ruc_ci}} - {{item.tab_cliente_nombre_empresa}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <app-stock></app-stock> -->
+    </div>
+  </div>
+  </div>
+
+  </div>
+<div class="card card-outline-inverse">
+  <div class="card-header">
+    <h4 class="m-b-0 text-white">Detalle de Ventas a Clientes</h4>
+  </div>
+  <div class="card-body">
+    <div class="row animated fadeIn">
+      <div class="col-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="card">
+              <input type="text" [(ngModel)]="term" placeholder="Ingrese el nombre o código...">
+            </div>
+          </div>
+        </div>
+        <div class="card-columns">
+          <div *ngFor="let item of _producto | filter:term ; let i=index" (click)="addToCheck(item)">
+            <div class="card" *ngIf="i<6">
+              <img class="card-img-top" [src]="item.imagen" [alt]="item.nombre">
+              <div class="card-body">
+                <h5 class="card-title">{{item.codigo}} - {{item.nombre}}</h5>
+                <p class="card-text">{{item.precio | currency}}</p>
+                <p class="card-text">
+                  <small class="text-muted">Stock: {{item.stock}} </small>
+                </p>
+                <p class="card-text">
+                  <small class="text-muted">IVA: {{item.iva}} </small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <app-stock></app-stock> -->
+
+      </div>
+      <div class="col-8">
+
+        <div class="card" id="kick-start">
+          <div class="card-body">
+            <form [formGroup]="compraForm" (ngSubmit)="onSubmit()" novalidate>
+              <div>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label class="center-block">Nro Fact:
+                            <input type="number" min="1" class="form-control" formControlName="venta_datos_nro_factura">
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="center-block ">Fecha:
+                            <input type="text" class="form-control" formControlName="venta_datos_fecha" readonly="false"
+                              [value]="fechaActual  | date: 'dd/MM/yyyy HH:mm'">
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label class="control-label">Forma Pago</label>
+                          <select class="form-control altura-select" formControlName="fk_forma_pago_id">
+                            <option [value]="0">Seleccione una ...</option>
+                            <option *ngFor="let item of _formaPago" [value]="item.forma_pago_id">{{item.forma_pago_nombre}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label class="control-label">Cédula</label>
+                          <input type="text" class="form-control" readonly="false" [value]="clienteci">
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="control-label">Nombres</label>
+                          <input type="text" class="form-control" readonly="false" [value]="clientename">
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label class="control-label">Dirección</label>
+                          <input type="text" class="form-control" readonly="false" [value]="clientedir">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div formArrayName="detalles" class="well well-lg">
+              </div>
+              <div>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table color-table dark-table table-hover contact-list" id="mytable">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th width="25%" class="text-xs-center">Producto</th>
+                            <th width="10%" class="text-xs-center">Cantidad</th>
+                            <th width="15%" class="text-xs-center">Valor Unit</th>
+                            <th width="10%" class="text-xs-center">IVA</th>
+                            <!-- <th width="10%" class="text-xs-center">Descuento</th> -->
+                            <th width="15%" class="text-xs-center">Total</th>
+                            <th width="20%" class="text-xs-center">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let item of ticket; let i=index">
+                          <tr>
+                            <td>
+                              <h4>{{i + 1}}</h4>
+                            </td>
+                            <td class="text-xs-center">
+                              <input type="text" class="form-control" [value]="item.codigo" readonly="disabled">
+                            </td>
+                            <td class="text-xs-center">
+                              <input type="number" class="form-control" [value]="item.quantity" #cantidad readonly="disabled">
+                            </td>
+                            <td class="text-xs-center">
+                              <input type="number" class="form-control" [value]="item.precio" #valorunit readonly="disabled">
+                            </td>
+                            <td class="text-xs-center">
+                              <input type="text" class="form-control" [value]="item.iva" readonly="disabled">
+                            </td>
+                            <!-- <td class="text-xs-center">
+                              <input type="number" class="form-control" [value]="item.descuento" (change)="changeDescuento(item, descuento.valueAsNumber)"
+                                #descuento>
+                            </td> -->
+                            <td class="text-xs-center">
+                              <!-- <input type="number" class="form-control" [value]="((cantidad.valueAsNumber * valorunit.valueAsNumber) - ((cantidad.valueAsNumber * valorunit.valueAsNumber) * (descuento.valueAsNumber/100)))"
+                                readonly="disabled"> -->
+                              <input type="number" class="form-control" [value]="(cantidad.valueAsNumber * valorunit.valueAsNumber)"
+                                readonly="disabled">
+                            </td>
+                            <td class="text-xs-center">
+                              <button type="button" class="btn btn-danger" (click)="removeItem(item)">
+                                <i class="fa fa-close white"></i>
+                              </button>
+                              <button type="button" class="btn btn-success" (click)="addToCheck(item)">
+                                <i class="fa fa-plus white"></i>
+                              </button>
+                              <button type="button" class="btn btn-info" (click)="subtractOne(item)">
+                                <i class="fa fa-minus white"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- <div class="row">
+                <div class="col-sm-12">
+                  <div class="float-right">
+                    <label class="center-block">Descuentos:
+                      <input type="number" class="form-control" [value]="descuentito" readonly="disabled">
+                    </label>
+                  </div>
+                </div>
+              </div> -->
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="float-right">
+                    <label class="center-block">Subtotal $:
+                      <input type="number" class="form-control" [value]="subt" readonly="disabled">
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="float-right">
+                    <label class="center-block">Subtotal 0 %:
+                      <input type="number" class="form-control" [value]="cartTotalSinIva" readonly="disabled">
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="float-right">
+                    <label class="center-block">IVA 12%
+                      <input type="number" class="form-control" [value]="iva" readonly="disabled">
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="float-right">
+                    <label class="center-block"> Total:
+                      <input type="number" class="form-control" [value]="cartTotal" readonly="disabled">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="col-sm-8" *ngIf="postForm">
+
+              <button (click)="doSave()" [disabled]="compraForm.pristine" class="btn btn-info">
+                <i class="fa fa-save"></i> Guardar</button> &nbsp;
+              <!-- <button (click)="printContent()" [disabled]="compraForm.pristine" class="btn btn-warning">
+                <i class="fa fa-print"></i> Imprimir & Guardar</button> &nbsp; -->
+            </div>
+            <!-- <p>{{ compraForm.value | json}}</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

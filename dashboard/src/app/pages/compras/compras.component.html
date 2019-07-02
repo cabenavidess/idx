@@ -1,0 +1,193 @@
+<div class="card card-outline-inverse">
+    <div class="card-header">
+      <h4 class="m-b-0 text-white">Proveedores</h4>
+    </div>
+  <div class="card-body">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body card-body-venta">
+          <div class="card">
+            <input type="text" [(ngModel)]="termClient" placeholder="Seleccione el proveedor..">
+          </div>
+        </div>
+      </div>
+      <div class="card-columns">
+        <div *ngFor="let item of _proveedor | filter:termClient ; let i=index" (click)="addToClient(item)">
+          <div class="card" *ngIf="i<3">
+            <div class="card-body">
+              <h5 class="card-title">{{item.tab_proveedor_mercaderia_empresa}} - {{item.tab_proveedor_mercaderia_ruc}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card card-outline-inverse">
+  <div class="card-header">
+    <h4 class="m-b-0 text-white">Detalle de compras a Proveedores</h4>
+    <button type="button" class=" btn btn-rounded float-right" (click)="export()">
+      <i class="fa fa-download"></i>
+    </button>
+  </div>
+
+  <div class="card-body">
+    <div class="row animated fadeIn">
+
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="card">
+              <input type="text" [(ngModel)]="term" placeholder="Ingrese el nombre o código...">
+            </div>
+          </div>
+        </div>
+        <div class="card-columns">
+          <div *ngFor="let item of _producto | filter:term ; let i=index" (click)="addToCheck(item); changePrecioU(item, item.precio, item.utility)">
+            <div class="card" *ngIf="i<6">
+              <img class="card-img-top" [src]="item.tab_producto_imagen" [alt]="item.tab_producto_nombre">
+              <div class="card-body">
+                <h5 class="card-title">{{item.tab_producto_codigo}} - {{item.tab_producto_nombre}} </h5>
+                <p class="card-text">{{item.precio | currency}}</p>
+                <p class="card-text">
+                  <small class="text-muted">IVA: {{item.iva}} </small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-9">
+
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="compraForm" (ngSubmit)="onSubmit()" novalidate>
+              <div>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="control-label">Código</label>
+                          <input type="number" min="1" class="form-control" formControlName="datos_compra_guia">
+                        </div>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="form-group">
+                          <label class="control-label">Fecha</label>
+                          <input type="date" class="form-control altura" formControlName="fecha" min="2018-01-01" max="2099-01-01">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="control-label">Cédula</label>
+                          <input type="text" class="form-control" readonly="false" [value]="proveedorci">
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="control-label">Nombres</label>
+                          <input type="text" class="form-control" readonly="false" [value]="prooveedorname">
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="control-label">Email</label>
+                          <input type="text" class="form-control" readonly="false" [value]="prooveedoremail">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div formArrayName="detalles" class="well well-lg">
+                <div>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table color-table dark-table table-hover contact-list" id="mytable">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th width="15%" class="text-xs-center">Producto</th>
+                              <th width="5%" class="text-xs-center">Cantidad</th>
+                              <th width="15%" class="text-xs-center">Valor Unit</th>
+                              <th width="6%" class="text-xs-center">IVA</th>
+                              <th width="10%" class="text-xs-center">Costo</th>
+                              <th width="10%" class="text-xs-center">Utilidad %</th>
+                              <th width="10%" class="text-xs-center">Valor Venta</th>
+                              <th width="10%" class="text-xs-center">Total</th>
+                              <th width="10%" class="text-xs-center">Acciones</th>
+                            </tr>
+                          </thead>
+
+                          <tbody *ngFor="let item of ticket; let i=index">
+                            <tr>
+                              <td>
+                                <h4>{{i + 1}}</h4>
+                              </td>
+                              <td class="text-xs-center">
+                                <input type="text" class="form-control" [value]="item.tab_producto_codigo" readonly="disabled">
+                              </td>
+                              <td class="text-xs-center">
+                                <input type="number" class="form-control" [value]="item.quantity" readonly="disabled"
+                                  #cantidad>
+                              </td>
+                              <td class="text-xs-center">
+                                <input type="number" class="form-control" [value]="item.precio" #valorunit (change)="changePrecioU(item, valorunit.valueAsNumber, utilidad.valueAsNumber)">
+                              </td>
+                              <td>
+                                <input type="text" *ngIf="item.iva == 'CON IVA'" class="form-control" value="SI" #iva
+                                  readonly="disabled">
+                                <input type="text" *ngIf="item.iva !== 'CON IVA'" class="form-control" value="NO" #iva
+                                  readonly="disabled">
+                              </td>
+                              <td class="text-xs-center">
+                                <input type="text" class="form-control" [value]="item.cant" #costo readonly="disabled">
+                              </td>
+                              <td class="text-xs-center">
+                                <input type="number" class="form-control" [value]="item.utility" #utilidad (change)="changePrecioU(item, valorunit.valueAsNumber, utilidad.valueAsNumber)" (click)="changePrecioU(item, valorunit.valueAsNumber, utilidad.valueAsNumber)">
+                              </td>
+                              <td class="text-xs-center">
+                                <input type="text" class="form-control" [value]="item.valor_venta" readonly="disabled">
+                              </td>
+                              <td class="text-xs-center" id="total_fila">
+                                <input type="text" class="form-control" [value]="item.valor_venta_total" readonly="disabled"
+                                  #valorventatotal>
+                              </td>
+                              <td class="text-xs-center">
+                                <button type="button" class="btn btn-danger" (click)="removeItem(item)">
+                                  <i class="fa fa-close white"></i>
+                                </button>
+                                <button type="button" class="btn btn-success" (click)="addToCheck(item);changePrecioU(item, item.precio, item.utility)">
+                                  <i class="fa fa-plus white"></i>
+                                </button>
+                                <button type="button" class="btn btn-info" (click)="subtractOne(item)">
+                                  <i class="fa fa-minus white"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="col-sm-8">
+              <button (click)="calculos();doSave()" [disabled]="compraForm.pristine" class="btn btn-info">
+                <i class="fa fa-save"></i> Guardar</button> &nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

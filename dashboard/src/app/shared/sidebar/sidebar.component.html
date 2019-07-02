@@ -1,0 +1,172 @@
+<aside class="left-sidebar">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- User profile -->
+    <div class="user-profile" style="background: url(assets/images/background/user-info.jpg) no-repeat;">
+      <!-- User profile image -->
+      <div class="profile-img">
+        <img src="assets/images/users/1.jpg" alt="user" /> </div>
+      <!-- User profile text-->
+      <div class="profile-text">
+        <a>Administración
+          <span class="caret"></span>
+        </a>
+
+      </div>
+    </div>
+    <!-- End User profile text-->
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+
+        <li [class.active]="showMenu === 'start'">
+          <a routerLink="/dashboard" (click)="addExpandClass('start')" [routerLinkActive]="['router-link-active']">
+            <i class="mdi mdi-gauge"></i>
+            <span class="hide-menu">Dashboard</span>
+          </a>
+        </li>
+
+        <li [class.active]="showMenu === 'administracion'">
+          <a class="has-arrow waves-effect waves-dark" (click)="addExpandClass('administracion')" aria-expanded="false">
+            <i class="mdi mdi-blender"></i>
+            <span class="hide-menu">Administración</span>
+          </a>
+          <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'administracion'">
+            <li>
+              <a routerLinkActive="active" routerLink="/user/admin">Usuarios</a>
+            </li>
+            <!-- <li>
+              <a routerLinkActive="active" routerLink="/user">Usuarios</a>
+            </li> -->
+          </ul>
+        </li>
+
+        <li [class.active]="showMenu === 'negocios'">
+          <a class="has-arrow waves-effect waves-dark" (click)="addExpandClass('negocios')" aria-expanded="false">
+            <i class="mdi mdi-routes"></i>
+            <span class="hide-menu">Negocio</span>
+          </a>
+          <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'negocios'">
+            <li>
+              <a routerLinkActive="active" routerLink="/ciudad">Ciudad</a>
+            </li>
+            <li>
+              <a routerLinkActive="active" routerLink="/representantenegocio">Representante</a>
+            </li>
+            <li>
+                <a routerLinkActive="active" routerLink="/sucursal">Sucursal</a>
+              </li>
+          </ul>
+        </li>
+
+
+        <li [class.active]="showMenu === 'cliente'">
+          <a routerLink="/cliente" (click)="addExpandClass('cliente')" [routerLinkActive]="['router-link-active']">
+            <i class="mdi mdi-account-circle"></i>
+            <span class="hide-menu">Clientes</span>
+          </a>
+        </li>
+
+        <li [class.active]="showMenu === 'productos'">
+          <a class="has-arrow waves-effect waves-dark" (click)="addExpandClass('productos')" aria-expanded="false">
+            <i class="fa fa-eercast"></i>
+            <span class="hide-menu">Productos</span>
+          </a>
+          <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'productos'">
+            <li>
+              <a routerLinkActive="active" routerLink="/categoria">Categoria</a>
+            </li>
+            <li>
+              <a routerLinkActive="active" routerLink="/marca">Marca</a>
+            </li>
+            <li>
+              <a routerLinkActive="active" routerLink="/producto">Catálogo Productos</a>
+            </li>
+          </ul>
+        </li>
+
+
+        <li [class.active]="showMenu === 'impuestos'">
+          <a routerLink="/impuesto" (click)="addExpandClass('impuestos')" [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-percent"></i>
+            <span class="hide-menu">Impuestos</span>
+          </a>
+        </li>
+
+        <li [class.active]="showMenu === 'mercaderia'">
+          <a class="has-arrow waves-effect waves-dark" (click)="addExpandClass('mercaderia')" aria-expanded="false">
+            <i class="fa fa-briefcase"></i>
+            <span class="hide-menu">Mercadería</span>
+          </a>
+          <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'mercaderia'">
+            <li>
+              <a routerLinkActive="active" routerLink="/proveedor">Proveedores</a>
+            </li>
+            <li>
+              <a routerLinkActive="active" routerLink="/compras">Compras</a>
+            </li>
+            <li>
+              <a routerLinkActive="active" routerLink="/compras/lista">Lista Compras</a>
+            </li>
+          </ul>
+        </li>
+
+        <li [class.active]="showMenu === 'ventas'">
+          <a class="has-arrow waves-effect waves-dark" (click)="addExpandClass('ventas')" aria-expanded="false">
+            <i class="mdi mdi-cash-multiple"></i>
+            <span class="hide-menu">Ventas Clientes</span>
+          </a>
+          <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'ventas'">
+            <li>
+              <a routerLinkActive="active" routerLink="/ventas">Ventas</a>
+            </li>
+            <li>
+              <a routerLinkActive="active" routerLink="/ventas/lista">Lista Ventas</a>
+            </li>
+            <li>
+              <a routerLinkActive="active" routerLink="/ventas/recaudaciones">Total Recaudado</a>
+            </li>
+          </ul>
+        </li>
+
+
+        <li [class.active]="showMenu === 'stock'">
+          <a routerLink="/stock" (click)="addExpandClass('stock')" [routerLinkActive]="['router-link-active']">
+            <i class="mdi  mdi-table"></i>
+            <span class="hide-menu">Stock</span>
+          </a>
+        </li>
+        <li [class.active]="showMenu === 'mov'">
+          <a routerLink="/stock/movimientos" (click)="addExpandClass('mov')" [routerLinkActive]="['router-link-active']">
+            <i class="mdi mdi-cards-variant"></i>
+            <span class="hide-menu">Movimientos</span>
+          </a>
+        </li>
+
+
+
+
+
+
+      </ul>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+  <!-- Bottom points-->
+  <div class="sidebar-footer">
+    <!-- item-->
+    <!-- <a href="" class="link" data-toggle="tooltip" title="Settings">
+      <i class="ti-settings"></i>
+    </a> -->
+    <!-- item-->
+    <!-- <a href="" class="link" data-toggle="tooltip" title="Email">
+      <i class="mdi mdi-gmail"></i>
+    </a> -->
+    <!-- item-->
+    <!-- <a (click)="logout()" class="link" data-toggle="tooltip" title="Logout">
+      <i class="mdi mdi-power"></i>
+    </a> -->
+  </div>
+  <!-- End Bottom points-->
+</aside>

@@ -1,0 +1,144 @@
+Alter Table
+
+php yii migrate/create add_icono_column_to_tab_categoria_table --fields="tab_categoria_icono:string(45)"
+
+Reservas
+php yii migrate/create create_reserva_table --fields="reserva_id:primaryKey,usuario_id:integer:notNull:foreignKey(user),reserva_fecha:dateTime"
+
+
+Reservas detalles
+php yii migrate/create create_reserva_detalle_table --fields="reserva_detalle_id:primaryKey,fk_reserva_id:integer:notNull:foreignKey(reserva),fk_producto_id:integer:notNull:foreignKey(tab_producto)"
+
+ALTER TABLE `induxion`.`detalle_compra` 
+ADD COLUMN `detalle_compra_iva` TINYINT NOT NULL AFTER `detalle_compra_valor_venta`;
+
+Alter Table
+
+php yii migrate/create add_iva_column_to_detalle_compra_table --fields="detalle_compra_iva:tinyint(1)"
+
+php yii migrate/create add_ganancia_column_to_detalle_compra_table --fields="detalle_compra_ganancia:boolean():NotNull"
+
+php yii migrate/create add_ganancia_column_to_detalle_compra_table --fields="detalle_compra_ganancia:boolean():NotNull"
+
+php yii migrate/create create_venta_detalle_table --fields="venta_detalle_id:primaryKey, fk_tab_producto_id:integer:notNull:foreignKey(tab_producto),venta_detalle_cantidad:integer:notNull,venta_detalle_valor_unit:decimal(7,2):notNull,venta_detalle_descuento:integer(3),venta_detalle_total:decimal(7,2):notNull"
+
+php yii migrate/create create_forma_pago_table --fields="forma_pago_id:primaryKey,forma_pago_nombre:string(40):notNull"
+
+php yii migrate/create create_venta_datos_table --fields="venta_datos_id:primaryKey, fk_sucursal_id:integer:notNull:foreignKey(tab_negocio_sucursal),fk_tab_cliente_id:integer:notNull:foreignKey(tab_cliente),venta_datos_nro_factura:integer(10):notNull,venta_datos_fecha:datetime:notNull,fk_forma_pago_id:integer:notNull:foreignKey(forma_pago),venta_datos_subtotal:decimal(7,2),venta_datos_subtotal_cero:decimal(7,2),venta_datos_iva:decimal(7,2),venta_datos_total:decimal(7,2):notNull"
+==================================================
+PROCEDIMINETOS
+
+
+DELIMITER $$
+CREATE DEFINER=`quanaioq`@`localhost` PROCEDURE `CierreDiario`(IN `periodo` INT, OUT `band1` INT)
+BEGIN
+DECLARE nfact int default 0;
+declare i int default 1;
+declare aid int ;
+declare band int default 1;
+declare acuentaid varchar(39) ;
+declare ccierre cursor for  SELECT conta_tab_masiento.Id FROM  `conta_tab_masiento`
+        WHERE conta_tab_masiento.Contabilizado =0 AND YEAR( conta_tab_masiento.Fecha ) =periodo;
+SELECT count(*) into nfact FROM  `conta_tab_masiento`
+        WHERE conta_tab_masiento.Contabilizado =0 AND YEAR( conta_tab_masiento.Fecha ) =periodo;
+open ccierre;
+repeat
+  if i<=nfact then
+    fetch ccierre into aid;
+    if aid is not null and aid>0 then
+       call CierreDiario1(aid ,@band);
+       if @band=0 then
+         set i=nfact;
+       end if;
+    end if;
+  end if;
+  set i=i+1;
+until i>nfact end repeat;
+if nfact>0 then
+    set band1=@band;
+else
+set band1=band;
+end if;
+END$$
+DELIMITER ;
+
+
+
+
+
+DELIMITER $$
+CREATE DEFINER=`quanaioq`@`localhost` PROCEDURE `CostoVenta`(IN `pmes` INT, IN `panio` INT, OUT `res` VARCHAR(30))
+BEGIN
+declare nprod int default 0;
+declare i int default 1;
+declare pid int ;
+declare costo decimal(10,2) default 0;
+declare costoven decimal(10,2) default 0;
+declare cinventarios varchar(30);
+declare ccostoventas varchar(30);
+declare masiento int ;
+declare pmetodo int;
+declare pdebe decimal(10,2);
+  declare cprod cursor for SELECT DISTINCT vkardex.Producto_id FROM vkardex  where  YEAR( vkardex.Fecha ) =panio AND MONTH( vkardex.Fecha ) =pmes;
+  SELECT count(DISTINCT vkardex.Producto_id) into nprod FROM vkardex  where  YEAR( vkardex.Fecha ) =panio AND MONTH( vkardex.Fecha ) =pmes;
+  select conta_tab_opciones.CostoVentas,conta_tab_opciones.Inventarios,conta_tab_opciones.MetodoInv
+  into ccostoventas,cinventarios,pmetodo from conta_tab_opciones ;
+  set res=0;
+  open  cprod;
+  repeat
+    fetch  cprod into pid;
+    if i<=nprod then
+      call CostoVenta1(pmes,panio,pid,pmetodo,@costo);
+      set costoven= costoven+@costo;
+    end if;
+    set i=i+1;
+    set res=concat("1000 ","");
+  until i>nprod end repeat;
+  set pdebe=costoven;
+  set res=concat(res," ",pdebe);
+  if pdebe>0 then
+    select conta_tab_masiento.Id into masiento from conta_tab_masiento,conta_tab_dasiento
+  where  conta_tab_dasiento.Cuenta_id=ccostoventas and year(conta_tab_masiento.Fecha)=panio
+  and month(conta_tab_masiento.Fecha)=pmes and conta_tab_masiento.Id=conta_tab_dasiento.Asiento_id ;
+    if masiento is null then
+      INSERT INTO   conta_tab_masiento (Fecha, Tipo_Asiento_id, Concepto,Total) VALUES (concat(panio,'-',pmes,'-',28),1,"Costo de ventas",pdebe);
+      set pid=last_insert_id();
+      INSERT INTO  conta_tab_dasiento (Asiento_id,Cuenta_id, Concepto, Debe,Haber) VALUES (pid,ccostoventas,"Costo de ventas",pdebe,0);
+      INSERT INTO  conta_tab_dasiento (Asiento_id,Cuenta_id, Concepto, Debe,Haber) VALUES (pid,cinventarios,"Costo de ventas",0,pdebe);
+      update  conta_tab_masiento set Transaccion=pid where Id=pid;
+    else
+      update conta_tab_masiento set  conta_tab_masiento.Total=pdebe where conta_tab_masiento.Id= masiento;
+      update conta_tab_dasiento set conta_tab_dasiento.Debe=pdebe where conta_tab_dasiento.Asiento_id=masiento and conta_tab_dasiento.Debe>0;
+      update conta_tab_dasiento set conta_tab_dasiento.Haber=pdebe where conta_tab_dasiento.Asiento_id=masiento and conta_tab_dasiento.Haber>0;
+    end if;
+    set res=concat(res," 1");
+  end if;
+close cprod;
+END$$
+DELIMITER ;
+
+
+
+
+
+DELIMITER $$
+CREATE DEFINER=`quanaioq`@`localhost` PROCEDURE `grabaVenta`(IN `paut` VARCHAR(60), IN `pfecha` DATETIME, IN `piced` INT, IN `pformap` VARCHAR(10), IN `pfacnota` INT, IN `pfactref` INT, IN `pserie` VARCHAR(10), IN `pobservaciones` VARCHAR(60), IN `panticipo` DECIMAL(10,2), IN `vendid` INT, IN `psubtotal` DECIMAL(10,2), IN `psubtotal0` DECIMAL(10,2), IN `piva` INT, IN `pusuario` INT, IN `pplazo` INT, OUT `factid` INT)
+BEGIN
+
+if panticipo>0  then
+   set pformap="Credito";
+   if pplazo=0 then
+      set pplazo=30;
+   end if;
+end if;
+ if pformap="Credito" or pformap="Deposito" then
+   if pplazo=0 then
+      set pplazo=30;
+   end if;
+ end if;
+INSERT INTO  mfactura (Fecha,Autorizacion, Cliente_id, Vendedor_id,Serie,Subtotal,Subtotal0, Factref,FormaPago,Iva, Facnota, Usuario_id,Anticipo,Observaciones,Plazo)
+VALUES ( pfecha,paut , piced  ,vendid,pserie, psubtotal,psubtotal0,pfactref,pformap ,piva, pfacnota ,pusuario,panticipo, pobservaciones,pplazo);
+set factid =last_insert_id();
+
+END$$
+DELIMITER ;

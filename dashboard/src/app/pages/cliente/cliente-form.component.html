@@ -1,0 +1,90 @@
+<div class="row" *ngIf="_errorMessage">
+    <div class="col-sm-12">
+        <p class="alert alert-danger">{{_errorMessage}}</p>
+    </div>
+</div>
+<div class="animated fadeIn" *ngIf="!_mode && !_errorMessage">
+    <span class="spinner"></span>
+</div>
+
+<div class="row" *ngIf="_mode">
+    <div class="col-lg-12">
+        <div class="card card-outline-inverse">
+            <div class="card-header">
+                <h4 class="m-b-0 text-white" *ngIf="_mode == 'create'">Crear Nuevo Cliente</h4>
+                <h4 class="m-b-0 text-white" *ngIf="_mode == 'update'">Actualizar Cliente</h4>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="forma" (ngSubmit)="guardarDatos()">
+                    <div class="form-body">
+                        <div class="row p-t-20">
+                            <div class="col-md-12">
+
+                                <div class="form-group" [class.has-danger]="forma.controls['tab_cliente_ruc_ci'].errors?.pattern">
+                                    <label class="control-label">Cédula - Ruc
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Ingrese el nombre de la cuidad..." formControlName="tab_cliente_ruc_ci"
+                                        [(ngModel)]="_cliente.tab_cliente_ruc_ci" change/>
+                                    <small class="form-control-feedback" *ngIf="forma.controls['tab_cliente_ruc_ci'].errors?.required"> Campo requerido</small>
+                                    <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_cliente_ruc_ci'].errors?.pattern"> La cédula o ruc del cliente sólo permite números y un rango de 10 a 13 caracteres.</small>
+                                </div>
+
+                                <div class="form-group" [class.has-danger]="forma.controls['tab_cliente_nombre_empresa'].errors?.pattern">
+                                    <label class="control-label">Nombre del Cliente o Empresa
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Ingrese el nombre de la cuidad..." formControlName="tab_cliente_nombre_empresa"
+                                        [(ngModel)]="_cliente.tab_cliente_nombre_empresa" (ngModelChange)="_cliente.tab_cliente_nombre_empresa = $event.toLocaleUpperCase()"
+                                    />
+                                    <small class="form-control-feedback" *ngIf="forma.controls['tab_cliente_nombre_empresa'].errors?.required"> Campo requerido</small>
+                                    <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_cliente_nombre_empresa'].errors?.pattern"> El nombre del cliente sólo permite letras, espacios y una longitud mínima de 3 caracteres.</small>
+                                </div>
+
+                                <div class="form-group" [class.has-danger]="forma.controls['tab_cliente_direccion'].errors?.pattern">
+                                    <label class="control-label">Dirección del Cliente o Empresa
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Ingrese el nombre de la cuidad..." formControlName="tab_cliente_direccion"
+                                        [(ngModel)]="_cliente.tab_cliente_direccion" (ngModelChange)="_cliente.tab_cliente_direccion = $event.toLocaleUpperCase()"
+                                    />
+                                    <small class="form-control-feedback" *ngIf="forma.controls['tab_cliente_direccion'].errors?.required"> Campo requerido</small>
+                                    <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_cliente_direccion'].errors?.pattern"> La dirección del cliente sólo permite letras, números, espacios y una longitud mínima de 3 caracteres.</small>
+                                </div>
+
+                                <div class="form-group" [class.has-danger]="forma.controls['tab_cliente_telefono'].errors?.pattern">
+                                    <label class="control-label">Teléfono del Cliente o Empresa
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Ingrese el nombre de la cuidad..." formControlName="tab_cliente_telefono"
+                                        [(ngModel)]="_cliente.tab_cliente_telefono" change/>
+                                    <small class="form-control-feedback" *ngIf="forma.controls['tab_cliente_telefono'].errors?.required"> Campo requerido</small>
+                                    <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_cliente_telefono'].errors?.pattern"> El Teléfono del cliente sólo permite números.</small>
+                                </div>
+
+                                <div class="form-group" [class.has-danger]="forma.controls['tab_cliente_email'].errors?.pattern">
+                                    <label class="control-label">Correo Electrónico del Cliente o Empresa
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Ingrese el nombre de la cuidad..." formControlName="tab_cliente_email"
+                                        [(ngModel)]="_cliente.tab_cliente_email" (ngModelChange)="_cliente.tab_cliente_email = $event.toLocaleLowerCase()"
+                                    />
+                                    <small class="form-control-feedback" *ngIf="forma.controls['tab_cliente_email'].errors?.required"> Campo requerido</small>
+                                    <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_cliente_email'].errors?.pattern"> El correo electrónico del cliente sólo permite un formato como: ejemplo@mail.com</small>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <!-- <button type="submit" class="btn btn-success" [disabled]="!_form.valid || _submitted == true"> -->
+                        <button type="submit" class="btn btn-success" [disabled]="!forma.valid || _submitted == true">
+                            <i class="fa fa-check"></i> Guardar</button>
+                        <button type="button" class="btn btn-inverse" [routerLink]="['/cliente']">
+                            <i class="fa  fa-arrow-left"></i> Regresar a la lista</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="row" *ngIf="_mode">
+  <div class="col-lg-12">
+    <div class="card card-outline-inverse">
+      <div class="card-header">
+        <h4 class="m-b-0 text-white" *ngIf="_mode == 'create'">Crear Nueva Sucursal</h4>
+        <h4 class="m-b-0 text-white" *ngIf="_mode == 'update'">Actualizar Sucursal</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="forma" (ngSubmit)="guardarDatos()">
+          <div class="form-body">
+            <div class="row p-t-20">
+              <div class="col-md-12">
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_negocio_sucursal_nombre'].errors?.pattern">
+                  <label class="control-label">Nombre de Sucursal
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese el nombre de la sucursal..." formControlName="tab_negocio_sucursal_nombre"
+                    [(ngModel)]="_sucursal.tab_negocio_sucursal_nombre" (ngModelChange)="_sucursal.tab_negocio_sucursal_nombre = $event.toLocaleUpperCase()"
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_negocio_sucursal_nombre'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_negocio_sucursal_nombre'].errors?.pattern"> El nombre de la sucursal sólo permite letras, números, espacios y una longitud mínima de 3 caracteres.</small>
+                </div>
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_negocio_sucursal_direccion'].errors?.pattern">
+                  <label class="control-label">Dirección
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese la dirección..." formControlName="tab_negocio_sucursal_direccion"
+                    [(ngModel)]="_sucursal.tab_negocio_sucursal_direccion" (ngModelChange)="_sucursal.tab_negocio_sucursal_direccion = $event.toLocaleUpperCase()"
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_negocio_sucursal_direccion'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_negocio_sucursal_direccion'].errors?.pattern">
+                    La dirección de la sucursal sólo permite letras, números, espacios y una longitud mínima de 3 caracteres.</small>
+                </div>
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_negocio_sucursal_telefono'].errors?.pattern">
+                  <label class="control-label">Teléfono
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese el teléfono..." formControlName="tab_negocio_sucursal_telefono"
+                    [(ngModel)]="_sucursal.tab_negocio_sucursal_telefono" (ngModelChange)="_sucursal.tab_negocio_sucursal_telefono = $event.toLocaleUpperCase()"
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_negocio_sucursal_telefono'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_negocio_sucursal_telefono'].errors?.pattern">
+                    El teléfono sólo permite números.</small>
+                </div>
+
+                <div class="form-group" [class.has-danger]="forma.controls['tab_negocio_sucursal_email'].errors?.pattern">
+                  <label class="control-label">Email
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese el teléfono..." formControlName="tab_negocio_sucursal_email"
+                    [(ngModel)]="_sucursal.tab_negocio_sucursal_email" (ngModelChange)="_sucursal.tab_negocio_suctab_negocio_sucursal_emailursal_telefono = $event.toLocaleUpperCase()"
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_negocio_sucursal_email'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_negocio_sucursal_email'].errors?.pattern">
+                    El correo electrónico del cliente sólo permite un formato como: ejemplo@mail.com</small>
+                </div>
+
+                <!-- fk_tab_negocio_representante_id -->
+                <!-- fk_tab_negocio_ciudad_id -->
+                <div class="row p-t-20">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="control-label">Representante</label>
+                      <select [(ngModel)]="_sucursal.fk_tab_negocio_representante_id" formControlName="fk_tab_negocio_representante_id" id="fk_tab_negocio_representante_id"
+                        class="form-control">
+                        <option *ngFor="let item of _representante" [value]="item.tab_negocio_representante_id">{{item.tab_negocio_representante_nombre}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row p-t-20">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="control-label">Ciudad</label>
+                      <select [(ngModel)]="_sucursal.fk_tab_negocio_ciudad_id" formControlName="fk_tab_negocio_ciudad_id" id="fk_tab_negocio_ciudad_id"
+                        class="form-control">
+                        <option *ngFor="let item of _ciudad" [value]="item.tab_negocio_ciudad_id">{{item.tab_negocio_ciudad_nombre}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="form-group">
+                  <label class="control-label">Estado</label>
+                  <select [(ngModel)]="_categoria.tab_categoria_status" formControlName="tab_categoria_status" class="form-control">
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                  </select>
+                </div> -->
+
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <!-- <button type="submit" class="btn btn-success" [disabled]="!_form.valid || _submitted == true"> -->
+            <button type="submit" class="btn btn-success" [disabled]="!forma.valid || _submitted == true">
+              <i class="fa fa-check"></i> Guardar</button>
+            <button type="button" class="btn btn-inverse" [routerLink]="['/categoria']">
+              <i class="fa  fa-arrow-left"></i> Regresar a la lista</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

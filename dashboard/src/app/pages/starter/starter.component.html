@@ -1,0 +1,186 @@
+<div class="row">
+
+  <div class="row">
+    <!-- Column -->
+    <!-- Column -->
+    <!-- Column -->
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div class="round round-lg align-self-center round-info">
+              <i class="mdi mdi-account-multiple"></i>
+            </div>
+            <div class="m-l-10 align-self-center">
+              <h3 class="m-b-0 font-lgiht">{{countCliente}}</h3>
+              <h5 class="text-muted m-b-0">Clientes</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div class="round round-lg align-self-center round-info">
+              <i class="mdi mdi-account-card-details"></i>
+            </div>
+            <div class="m-l-10 align-self-center">
+              <h3 class="m-b-0 font-lgiht">{{countCiudad}}</h3>
+              <h5 class="text-muted m-b-0">Usuarios del Sistema</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Column -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div class="round round-lg align-self-center round-info">
+              <i class="mdi mdi-hexagon-multiple"></i>
+            </div>
+            <div class="m-l-10 align-self-center">
+              <h3 class="m-b-0 font-lgiht">{{countCategoria}}</h3>
+              <h5 class="text-muted m-b-0">Categorias de Productos</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Column -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div class="round round-lg align-self-center round-info">
+              <i class="mdi mdi-lock-pattern"></i>
+            </div>
+            <div class="m-l-10 align-self-center">
+              <h3 class="m-b-0 font-lgiht">{{countMarca}}</h3>
+              <h5 class="text-muted m-b-0">Marcas de Productos</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Column -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div class="round round-lg align-self-center round-info">
+              <i class="mdi mdi-clipboard-arrow-down"></i>
+            </div>
+            <div class="m-l-10 align-self-center">
+              <h3 class="m-b-0 font-lgiht">{{countProveedor}}</h3>
+              <h5 class="text-muted m-b-0">Proveedores</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Column -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div class="round round-lg align-self-center round-info">
+              <i class="mdi mdi-clipboard-text"></i>
+            </div>
+            <div class="m-l-10 align-self-center">
+              <h3 class="m-b-0 font-lgiht">{{countProducto}}</h3>
+              <h5 class="text-muted m-b-0">Catálogo Productos</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Column -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div class="round round-lg align-self-center round-info">
+              <i class="mdi mdi-arrow-down-bold-circle-outline"></i>
+            </div>
+            <div class="m-l-10 align-self-center">
+              <h3 class="m-b-0 font-lgiht">{{countCCdiaria}}</h3>
+              <h5 class="text-muted m-b-0">Número de Compras Diarias</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div class="round round-lg align-self-center round-info">
+              <i class="mdi mdi-arrow-up-bold-circle-outline"></i>
+            </div>
+            <div class="m-l-10 align-self-center">
+              <h3 class="m-b-0 font-lgiht">{{countVdiaria}}</h3>
+              <h5 class="text-muted m-b-0">Número de Ventas Diarias</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column -->
+  </div>
+  <div class="col-sm-12">
+    <div class="row animated fadeIn">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title"> <strong> Total Recaudado Por Fechas:</strong></h4>
+            <hr>
+            <h6 class="card-subtitle">
+              <button type="button" class="btn btn-rounded btn-outline-info float-right" (click)="export()">
+                <i class="fa fa-download"></i> Exportar</button>
+            </h6>
+            <br>
+            <br>
+
+            <ng2-smart-table #grid [settings]="settings" [source]="data"></ng2-smart-table>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="forecast-table">
+    <div class="container">
+      <div class="forecast-container">
+        <div class="today forecast">
+          <div class="forecast-header">
+          </div>
+          <!-- .forecast-header -->
+          <div class="forecast-content">
+            <!-- <div class="location">{{ mi_clima.query?.results?.channel?.location?.city }}, {{ mi_clima.query?.results?.channel?.location?.country }}</div>
+                        <div class="degree">
+                            <div class="num">{{ mi_clima.query?.results?.channel?.item?.condition?.temp }}<sup>o</sup>F</div>
+                            <div class="forecast-icon">
+                                 <img src="assets/images/icons/icon-1.svg" alt="" width=90>
+                            </div>	
+                        </div> -->
+            <!-- <span><img src="assets/images/icon-umberella.png" alt="">20%</span>
+                        <span><img src="assets/images/icon-wind.png" alt="">18km/h</span>
+                        <span><img src="assets/images/icon-compass.png" alt="">East</span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

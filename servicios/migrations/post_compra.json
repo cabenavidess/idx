@@ -1,0 +1,27 @@
+{
+	"datos_compra_guia": 1,
+	"datos_compra_iva": 36,
+	"datos_compra_subtotal": 264,
+	"datos_compra_fecha": 2018,
+	"fk_tab_proveedor_mercaderia_id": 1,
+	"datos_compra_total": 300,
+	"detalles": [
+		{
+			"detalle_compra_cantidad": 1,
+			"detalle_compra_valor_unit": 100,
+			"detalle_compra_valor_total": 100,
+			"fk_tap_producto_id": 1,
+			"detalle_compra_valor_venta": 200
+		},
+		{
+			"detalle_compra_cantidad": 2,
+			"detalle_compra_valor_unit": 100,
+			"detalle_compra_valor_total": 200,
+			"fk_tap_producto_id": 2,
+			"detalle_compra_valor_venta": 150
+		}
+	]
+}
+
+
+{"datos_compra_guia":1,"datos_compra_iva":12,"datos_compra_subtotal":88,"datos_compra_fecha":2018,"fk_tab_proveedor_mercaderia_id":1,"datos_compra_total":100,"detalles":[{"detalle_compra_cantidad":1,"detalle_compra_valor_unit":100,"detalle_compra_valor_total":100,"fk_tap_producto_id":1,"detalle_compra_valor_venta":250}]}

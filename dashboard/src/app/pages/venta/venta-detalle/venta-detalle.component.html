@@ -1,0 +1,171 @@
+<div id="kick-start">
+  <div class="card">
+    <div class="card-body">
+      <h1 *ngIf="data">
+        {{data.estado}}
+      </h1>
+      <hr>
+      <div *ngIf="data">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12">
+                <h4 class="card-title">
+                  <strong>CLIENTE: </strong>
+                  {{data.cliente}}
+                </h4>
+              </div>
+              <div class="col-sm-12">
+                <h4 class="card-title">
+                  <strong>RUC: </strong>
+                  {{data.cedula}}
+                </h4>
+              </div>
+              <div class="col-sm-12">
+                <h4 class="card-title">
+                  <strong>TELEFONO: </strong>
+                  {{data.telefono}}
+                </h4>
+              </div>
+              <div class="col-sm-12">
+                <h4 class="card-title">
+                  <strong>DIRECCION: </strong>
+                  {{data.direccion}}
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+
+            <h4 class="card-title">
+              <strong>NRO: </strong>
+              {{data.nro}}
+            </h4>
+            <br>
+            <h4 class="card-title">
+              <strong>FECHA: </strong>
+              {{data.creado_en}}
+            </h4>
+            <br>
+            <h4 class="card-title">
+              <strong>VENTA POR: </strong>
+              {{data.username}}
+            </h4>
+          </div>
+        </div>
+
+        <!-- {{data | json }} -->
+      </div>
+
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="data">
+        <h3 class="card-title"><strong>Detalles:</strong> 
+        </h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table color-table success-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Cant</th>
+              <th>Valor Unit</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody ng-init="total = 0">
+            <tr *ngFor="let item of detalles; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{item.tab_producto_codigo}}</td>
+              <td>{{item.tab_producto_nombre}}</td>
+              <td>{{item.venta_detalle_cantidad}}</td>
+              <td>{{item.venta_detalle_valor_unit}}</td>
+              <td class="float-right"> {{ item.venta_detalle_cantidad * item.venta_detalle_valor_unit | currency }}</td>
+            </tr>
+            <br>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <b>SubTotal 12%</b>
+              </td>
+              <td class="float-right">
+                <b *ngIf="data">
+                  {{ data.subtotal | currency }}
+                </b>
+                <!-- <b><strong>{{ totalamount | currency }}</strong></b> -->
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <b>SubTotal 0%</b>
+              </td>
+              <td class="float-right">
+                <b *ngIf="data">
+                  {{ data.subtotal0 | currency }}
+                </b>
+                <!-- <b><strong>{{ totalamount | currency }}</strong></b> -->
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <b>Iva</b>
+              </td>
+              <td class="float-right">
+                <b *ngIf="data">
+                  {{ data.iva | currency }}
+                </b>
+                <!-- <b><strong>{{ totalamount | currency }}</strong></b> -->
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <b>Total</b>
+              </td>
+              <td class="float-right">
+                <b *ngIf="data">
+                  {{ data.total | currency }}
+                </b>
+                <!-- <b><strong>{{ totalamount | currency }}</strong></b> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- {{id}} -->
+</div>
+<div *ngIf="estado">
+  <button type="button" class="btn btn-outline-success" (click)="alertProDeleteVenta(id)">
+    <i class="fa fa-plus-square"></i> Anular venta</button>
+
+  <button type="button" class="btn btn-warning" (click)="printContent()">
+    <i class="fa fa-print"></i> Imprimir</button>
+</div>

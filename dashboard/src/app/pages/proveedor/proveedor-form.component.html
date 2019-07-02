@@ -1,0 +1,99 @@
+<div class="row" *ngIf="_mode">
+        <div class="col-lg-12">
+          <div class="card card-outline-inverse">
+            <div class="card-header">
+              <h4 class="m-b-0 text-white" *ngIf="_mode == 'create'">Crear Nuevo Proveedor</h4>
+              <h4 class="m-b-0 text-white" *ngIf="_mode == 'update'">Actualizar Proveedor</h4>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="forma" (ngSubmit)="guardarDatos()">
+                <div class="form-body">
+                  <div class="row p-t-20">
+                    <div class="col-md-12">
+      
+                      <div class="form-group" [class.has-danger]="forma.controls['tab_proveedor_mercaderia_ruc'].errors?.pattern">
+                        <label class="control-label">Ruc Proveedor
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Ingrese el RUC del Proveedor..." formControlName="tab_proveedor_mercaderia_ruc"
+                          [(ngModel)]="_proveedor.tab_proveedor_mercaderia_ruc" change/>
+                        <small class="form-control-feedback" *ngIf="forma.controls['tab_proveedor_mercaderia_ruc'].errors?.required"> Campo requerido</small>
+                        <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_proveedor_mercaderia_ruc'].errors?.pattern"> El RUC del proveedor sólo permite números y un rango de 10 a 13 caracteres.</small>
+                      </div>
+      
+                      <div class="form-group" [class.has-danger]="forma.controls['tab_proveedor_mercaderia_nombre'].errors?.pattern">
+                        <label class="control-label">Nombre Proveedor
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Ingrese el Nombre del Proveedor..." formControlName="tab_proveedor_mercaderia_nombre"
+                          [(ngModel)]="_proveedor.tab_proveedor_mercaderia_nombre" (ngModelChange)="_proveedor.tab_proveedor_mercaderia_nombre = $event.toLocaleUpperCase()"/>
+                        <small class="form-control-feedback" *ngIf="forma.controls['tab_proveedor_mercaderia_nombre'].errors?.required"> Campo requerido</small>
+                        <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_proveedor_mercaderia_nombre'].errors?.pattern"> El nombre del proveedor sólo permite letras, espacios y una longitud mínima de 3 caracteres.</small>
+                      </div>
+    
+                      <div class="form-group" [class.has-danger]="forma.controls['tab_proveedor_mercaderia_empresa'].errors?.pattern">
+                        <label class="control-label">Empresa
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Ingrese La empresa..." formControlName="tab_proveedor_mercaderia_empresa"
+                          [(ngModel)]="_proveedor.tab_proveedor_mercaderia_empresa" (ngModelChange)="_proveedor.tab_proveedor_mercaderia_empresa = $event.toLocaleUpperCase()"/>
+                        <small class="form-control-feedback" *ngIf="forma.controls['tab_proveedor_mercaderia_empresa'].errors?.required"> Campo requerido</small>
+                        <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_proveedor_mercaderia_empresa'].errors?.pattern"> El nombre de la empresa sólo permite letras, espacios y una longitud mínima de 3 caracteres.</small>
+                      </div>
+    
+                      <div class="form-group" [class.has-danger]="forma.controls['tab_proveedor_mercaderia_responsable'].errors?.pattern">
+                        <label class="control-label">Responsable
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Ingrese el responsable..." formControlName="tab_proveedor_mercaderia_responsable"
+                          [(ngModel)]="_proveedor.tab_proveedor_mercaderia_responsable" (ngModelChange)="_proveedor.tab_proveedor_mercaderia_responsable = $event.toLocaleUpperCase()"/>
+                        <small class="form-control-feedback" *ngIf="forma.controls['tab_proveedor_mercaderia_responsable'].errors?.required"> Campo requerido</small>
+                        <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_proveedor_mercaderia_responsable'].errors?.pattern"> El responsable de la empresa sólo permite letras, espacios y una longitud mínima de 3 caracteres.</small>
+                      </div>
+                      
+                      <div class="form-group" [class.has-danger]="forma.controls['tab_proveedor_mercaderia_telefono'].errors?.pattern">
+                        <label class="control-label">Teléfono
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Ingrese el numero de telefono..." formControlName="tab_proveedor_mercaderia_telefono"
+                          [(ngModel)]="_proveedor.tab_proveedor_mercaderia_telefono" (ngModelChange)="_proveedor.tab_proveedor_mercaderia_telefono = $event.toLocaleUpperCase()"/>
+                        <small class="form-control-feedback" *ngIf="forma.controls['tab_proveedor_mercaderia_telefono'].errors?.required"> Campo requerido</small>
+                        <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_proveedor_mercaderia_telefono'].errors?.pattern"> El teléfono de la empresa sólo permite números.</small>
+                      </div>
+    
+                      <div class="form-group" [class.has-danger]="forma.controls['tab_proveedor_mercaderia_direccion'].errors?.pattern">
+                        <label class="control-label">Dirección
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Ingrese el numero de telefono..." formControlName="tab_proveedor_mercaderia_direccion"
+                          [(ngModel)]="_proveedor.tab_proveedor_mercaderia_direccion" (ngModelChange)="_proveedor.tab_proveedor_mercaderia_direccion = $event.toLocaleUpperCase()"/>
+                        <small class="form-control-feedback" *ngIf="forma.controls['tab_proveedor_mercaderia_direccion'].errors?.required"> Campo requerido</small>
+                        <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_proveedor_mercaderia_direccion'].errors?.pattern"> La dirección de la empresa sólo permite letras, números, espacios y una longitud mínima de 3 caracteres.</small>
+                      </div>
+    
+                      <div class="form-group" [class.has-danger]="forma.controls['tab_proveedor_mercaderia_email'].errors?.pattern">
+                        <label class="control-label">Email
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Ingrese el numero de telefono..." formControlName="tab_proveedor_mercaderia_email"
+                          [(ngModel)]="_proveedor.tab_proveedor_mercaderia_email" change/>
+                        <small class="form-control-feedback" *ngIf="forma.controls['tab_proveedor_mercaderia_email'].errors?.required"> Campo requerido</small>
+                        <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_proveedor_mercaderia_email'].errors?.pattern"> El correo electrónico del proveedor sólo permite un formato como: ejemplo@mail.com</small>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <!-- <button type="submit" class="btn btn-success" [disabled]="!_form.valid || _submitted == true"> -->
+                  <button type="submit" class="btn btn-success" [disabled]="!forma.valid || _submitted == true">
+                    <i class="fa fa-check"></i> Guardar</button>
+                  <button type="button" class="btn btn-inverse" [routerLink]="['/proveedor']">
+                    <i class="fa  fa-arrow-left"></i> Regresar a la lista</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      

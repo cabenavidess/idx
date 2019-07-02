@@ -1,0 +1,37 @@
+<div class="row" *ngIf="_mode">
+  <div class="col-lg-12">
+    <div class="card card-outline-inverse">
+      <div class="card-header">
+        <h4 class="m-b-0 text-white" *ngIf="_mode == 'create'">Crear Nueva Ciudad</h4>
+        <h4 class="m-b-0 text-white" *ngIf="_mode == 'update'">Actualizar Ciudad</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="forma" (ngSubmit)="guardarDatos()">
+          <div class="form-body">
+            <div class="row p-t-20">
+              <div class="col-md-12">
+                <div class="form-group" [class.has-danger]="forma.controls['tab_negocio_ciudad_nombre'].errors?.pattern">
+                  <label class="control-label">Nombre
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="Ingrese el nombre de la cuidad..." formControlName="tab_negocio_ciudad_nombre"
+                    [(ngModel)]="_ciudad.tab_negocio_ciudad_nombre" (ngModelChange)="_ciudad.tab_negocio_ciudad_nombre = $event.toLocaleUpperCase()"
+                  />
+                  <small class="form-control-feedback" *ngIf="forma.controls['tab_negocio_ciudad_nombre'].errors?.required"> Campo requerido</small>
+                  <small class="form-control-feedback text-danger" *ngIf="forma.controls['tab_negocio_ciudad_nombre'].errors?.pattern"> El nombre de la ciudad sólo permite letras, espacios y una longitud mínima de 3 caracteres.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <!-- <button type="submit" class="btn btn-success" [disabled]="!_form.valid || _submitted == true"> -->
+            <button type="submit" class="btn btn-success" [disabled]="!forma.valid || _submitted == true">
+              <i class="fa fa-check"></i> Guardar</button>
+            <button type="button" class="btn btn-inverse" [routerLink]="['/ciudad']">
+              <i class="fa  fa-arrow-left"></i> Regresar a la lista</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
